@@ -15,6 +15,7 @@ public class Player_Controller : MonoBehaviour
 
     private int points;
     private int lives;
+    
 
     public bool isGameOver;
 
@@ -23,12 +24,16 @@ public class Player_Controller : MonoBehaviour
         lives = 3;
     }
 
+
+ private void Awake() 
+    {
+        isGameOver = false;
+
+    }
     
     void Update()
     {
 
-        if (isGameOver = true)
-        {
             //Movimiento vertical
 
             verticalInput = Input.GetAxis("Vertical");
@@ -45,18 +50,8 @@ public class Player_Controller : MonoBehaviour
 
             PlayerInBounds();
 
-        }
-
-        if (isGameOver = false) 
-        {
-        
-        }
     }
 
-    private void Awake() 
-    {
-        isGameOver = false;
-    }
     
     private void PlayerInBounds() 
     {
@@ -66,7 +61,9 @@ public class Player_Controller : MonoBehaviour
 
         if(pos.x < -xRange) 
         { 
+            
             //transform.position = new Vector3(-xRange, pos.y, pos.z);
+
             pos.x= -xRange;
 
         }
@@ -117,12 +114,13 @@ public class Player_Controller : MonoBehaviour
         if (other.gameObject.CompareTag("Bad Coin"))
         {
             lives --;
+            Debug.Log(lives);
 
             if(lives <= 0) 
             {
-                Debug.Log("Game Over");
+                GameOver();
             }
-            Debug.Log(lives);
+            
         }
 
         Destroy(other.gameObject);
@@ -132,5 +130,7 @@ public class Player_Controller : MonoBehaviour
     {
         Debug.Log("GAME OVER");
         isGameOver = true;
+
+
     }
 }

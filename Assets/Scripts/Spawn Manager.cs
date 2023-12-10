@@ -16,7 +16,7 @@ public class SpawnManager : MonoBehaviour
 
 
 
-    void Start()
+    private void Start()
     {
        playerControllerScript = FindObjectOfType<Player_Controller>();
         
@@ -24,7 +24,7 @@ public class SpawnManager : MonoBehaviour
     }
 
  
-    void Update()
+    private void Update()
     {
         if (playerControllerScript.isGameOver) 
         {
