@@ -219,6 +219,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   lateralSpeed: 5
+  pointspercoin: 50
+  recolectgoodcoinParticleSystem: {fileID: 5824670795371433373, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
+  recolectbadcoinParticleSystem: {fileID: 9027514048236820045, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
+  isGameOver: 0
+  isYouWin: 0
 --- !u!54 &177611665
 Rigidbody:
   m_ObjectHideFlags: 0

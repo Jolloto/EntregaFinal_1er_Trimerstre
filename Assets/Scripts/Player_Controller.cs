@@ -14,10 +14,17 @@ public class Player_Controller : MonoBehaviour
     private float zRange = 7f;
 
     private int points;
+    [SerializeField] int pointspercoin = 5;
     private int lives;
-    
+
+    private const string BADCOIN_TAG = "Bad Coin";
+    private const string GOODCOIN_TAG = "Good Coin";
+
+    [SerializeField] GameObject recolectgoodcoinParticleSystem;
+    [SerializeField] GameObject recolectbadcoinParticleSystem;
 
     public bool isGameOver;
+    public bool isYouWin;
 
     void Start()
     {
@@ -28,12 +35,16 @@ public class Player_Controller : MonoBehaviour
  private void Awake() 
     {
         isGameOver = false;
+        isYouWin = false;
 
     }
     
     void Update()
     {
+        if(!isYouWin && !isGameOver)
+        {
 
+        
             //Movimiento vertical
 
             verticalInput = Input.GetAxis("Vertical");
@@ -47,8 +58,11 @@ public class Player_Controller : MonoBehaviour
 
             transform.Translate(Vector3.right * lateralSpeed * Time.deltaTime * horizontalInput);
 
-
             PlayerInBounds();
+        }
+
+
+        
 
     }
 
@@ -100,21 +114,28 @@ public class Player_Controller : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-       if(other.gameObject.CompareTag("Good Coin")) 
+       if(other.gameObject.CompareTag(GOODCOIN_TAG)) 
         {
-            points += 5;
+            points += pointspercoin;
             Debug.Log(points);
+
+            Instantiate(recolectgoodcoinParticleSystem, other.transform.position, Quaternion.identity);
+            DestroyGameObject();
 
             if (points >= 50) 
             {
                 Debug.Log("You Win");
+                YouWin();
             }   
         }
 
-        if (other.gameObject.CompareTag("Bad Coin"))
+        if (other.gameObject.CompareTag(BADCOIN_TAG))
         {
             lives --;
             Debug.Log(lives);
+
+            Instantiate(recolectbadcoinParticleSystem, other.transform.position, Quaternion.identity); 
+
 
             if(lives <= 0) 
             {
@@ -130,7 +151,16 @@ public class Player_Controller : MonoBehaviour
     {
         Debug.Log("GAME OVER");
         isGameOver = true;
+    }
 
+    private void YouWin() 
+    {
+        Debug.Log("YOU WIN");
+        isYouWin = true;
+    }
 
+    void DestroyGameObject() 
+    { 
+        
     }
 }

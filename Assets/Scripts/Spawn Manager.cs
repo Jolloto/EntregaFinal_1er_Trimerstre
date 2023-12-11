@@ -26,7 +26,7 @@ public class SpawnManager : MonoBehaviour
  
     private void Update()
     {
-        if (playerControllerScript.isGameOver) 
+        if (playerControllerScript.isGameOver || playerControllerScript.isYouWin) 
         {
             CancelInvoke("InstantiateRandomCoin");
         }
