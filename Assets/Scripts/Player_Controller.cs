@@ -20,8 +20,20 @@ public class Player_Controller : MonoBehaviour
     private const string BADCOIN_TAG = "Bad Coin";
     private const string GOODCOIN_TAG = "Good Coin";
 
+    private const DEATH_BOOL = "Death_b";
+
+
     [SerializeField] GameObject recolectgoodcoinParticleSystem;
     [SerializeField] GameObject recolectbadcoinParticleSystem;
+
+    private AudioSource playerAudioSource;
+    [SerializeField] AudioClip SFX_GOODCOIN;
+    [SerializeField] AudioClip BadCoin;
+
+    [SerializeField] private AudioSource cameraAudioSource;
+
+    private Animator playerAnimator;
+
 
     public bool isGameOver;
     public bool isYouWin;
@@ -36,6 +48,9 @@ public class Player_Controller : MonoBehaviour
     {
         isGameOver = false;
         isYouWin = false;
+
+        playerAudioSource = GetComponent<AudioSource>();
+        playerAnimator = GetComponent<Animator>();
 
     }
     
@@ -120,7 +135,8 @@ public class Player_Controller : MonoBehaviour
             Debug.Log(points);
 
             Instantiate(recolectgoodcoinParticleSystem, other.transform.position, Quaternion.identity);
-            DestroyGameObject();
+            playerAudioSource.PlayOneShot(SFX_GOODCOIN);
+            
 
             if (points >= 50) 
             {
@@ -135,7 +151,7 @@ public class Player_Controller : MonoBehaviour
             Debug.Log(lives);
 
             Instantiate(recolectbadcoinParticleSystem, other.transform.position, Quaternion.identity); 
-
+            
 
             if(lives <= 0) 
             {
@@ -151,6 +167,7 @@ public class Player_Controller : MonoBehaviour
     {
         Debug.Log("GAME OVER");
         isGameOver = true;
+
     }
 
     private void YouWin() 
