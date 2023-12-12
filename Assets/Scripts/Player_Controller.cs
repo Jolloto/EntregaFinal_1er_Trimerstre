@@ -20,7 +20,7 @@ public class Player_Controller : MonoBehaviour
     private const string BADCOIN_TAG = "Bad Coin";
     private const string GOODCOIN_TAG = "Good Coin";
 
-    private const DEATH_BOOL = "Death_b";
+    private const string DEATH_BOOL = "Death_b";
 
 
     [SerializeField] GameObject recolectgoodcoinParticleSystem;
@@ -28,7 +28,7 @@ public class Player_Controller : MonoBehaviour
 
     private AudioSource playerAudioSource;
     [SerializeField] AudioClip SFX_GOODCOIN;
-    [SerializeField] AudioClip BadCoin;
+    [SerializeField] AudioClip SFX_BADCOIN;
 
     [SerializeField] private AudioSource cameraAudioSource;
 
@@ -135,7 +135,7 @@ public class Player_Controller : MonoBehaviour
             Debug.Log(points);
 
             Instantiate(recolectgoodcoinParticleSystem, other.transform.position, Quaternion.identity);
-            playerAudioSource.PlayOneShot(SFX_GOODCOIN);
+            playerAudioSource.PlayOneShot(SFX_GOODCOIN, 1f);
             
 
             if (points >= 50) 
@@ -150,12 +150,15 @@ public class Player_Controller : MonoBehaviour
             lives --;
             Debug.Log(lives);
 
-            Instantiate(recolectbadcoinParticleSystem, other.transform.position, Quaternion.identity); 
-            
+            Instantiate(recolectbadcoinParticleSystem, other.transform.position, Quaternion.identity);
+            playerAudioSource.PlayOneShot(SFX_BADCOIN, 1f);
+            playerAnimator.SetTrigger("Dolor");
 
-            if(lives <= 0) 
+
+            if (lives <= 0) 
             {
                 GameOver();
+                cameraAudioSource.Stop();
             }
             
         }
